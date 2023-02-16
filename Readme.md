@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Lenara](https://up.htmlacademy.ru/javascript/28/user/2272215).
-* Наставник: `Неизвестно`.
+* Наставник: [Павел Белик](https://htmlacademy.ru/profile/id84572).
 
 ---
 
