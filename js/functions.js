@@ -51,7 +51,7 @@ const padStart = (text, minLength, addonText) => {
 
   let newText = text;
 
-  while(newText.length !== minLength) {
+  while(newText.length < minLength) {
     let addonPart = '';
 
     for(let i = 0; i < addonText.length; i++) {
@@ -63,7 +63,6 @@ const padStart = (text, minLength, addonText) => {
     }
 
     newText = addonPart + newText;
-    addonPart = '';
   }
 
   return newText;
