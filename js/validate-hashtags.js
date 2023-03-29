@@ -1,7 +1,6 @@
 import { declOfNum, hasDuplicates } from './utils.js';
 
 const MAX_HASHTAGS_COUNT = 5;
-
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-8]{1,19}$/i;
 
 const errorMessages = {
@@ -14,7 +13,7 @@ let errorMessage = '';
 
 const validateHashtags = (value) => {
   errorMessage = '';
-  const hashtags = value.split(' ');
+  const hashtags = value.trim().split(' ').filter((hashtag) => hashtag);
 
   // Проверка на количество хэш-тегов
   if(hashtags.length > MAX_HASHTAGS_COUNT) {
@@ -23,7 +22,7 @@ const validateHashtags = (value) => {
   }
 
   // Проверка на допустимые символы
-  const atLeastOneNoMatch = hashtags.some((hashtag) => hashtag && !hashtag.match(HASHTAGS_REGEXP));
+  const atLeastOneNoMatch = hashtags.some((hashtag) => !hashtag.match(HASHTAGS_REGEXP));
   if(atLeastOneNoMatch) {
     errorMessage = errorMessages.noMatch;
     return false;
