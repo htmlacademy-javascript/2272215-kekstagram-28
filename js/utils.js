@@ -37,7 +37,9 @@ const declOfNum = (value, words) => {
 };
 
 const hasDuplicates = (values) => {
-  const duplicates = values.filter((value, index, array) => array.indexOf(value) !== index);
+  const duplicates = values
+    .map((value) => value.toLowerCase())
+    .filter((value, index, array) => array.indexOf(value) !== index);
   return !!duplicates.length;
 };
 
