@@ -1,10 +1,15 @@
-import { createPhotos} from './mock-data.js';
+import { showAlert } from './widgets/alert.js';
+import { getPhotos } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
 import { addFullImageFeatureToPictures } from './full-image.js';
 import './image-upload-form.js';
 import './scale.js';
 import './effects.js';
 
-const mockPhotos = createPhotos();
-renderThumbnails(mockPhotos);
-addFullImageFeatureToPictures(mockPhotos);
+getPhotos().then((photos) => {
+  renderThumbnails(photos);
+  addFullImageFeatureToPictures(photos);
+
+}).catch((err) => {
+  showAlert(err);
+});
