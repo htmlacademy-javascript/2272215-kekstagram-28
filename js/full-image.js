@@ -1,3 +1,5 @@
+const COMMENTS_COUNT = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 
 const addCloseButtonClickHandler = () => {
@@ -52,21 +54,22 @@ const fillBigPicture = (photo) => {
   const bigPictureImg = document.querySelector('.big-picture__img').querySelector('img');
   const likesCount = document.querySelector('.likes-count');
   const commentsCount = document.querySelector('.comments-count');
+  const shownCommentsCount = document.querySelector('.shown-comments-count');
   const socialCaption = document.querySelector('.social__caption');
 
   bigPicture.classList.remove('hidden');
   bigPictureImg.src = url;
   likesCount.textContent = likes;
   commentsCount.textContent = comments.length;
+  shownCommentsCount.textContent = COMMENTS_COUNT;
   socialCaption.textContent = description;
 
-  addSocialComments(comments);
+  addSocialComments(comments.slice(0, COMMENTS_COUNT));
 
   // чтобы контейнер с фотографиями позади не прокручивался при скролле
   document.body.classList.add('modal-open');
 
   // скрываем временно блоки
-  document.querySelector('.social__comment-count').classList.add('hidden');
   document.querySelector('.comments-loader').classList.add('hidden');
 };
 
