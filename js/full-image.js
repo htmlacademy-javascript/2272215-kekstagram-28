@@ -1,6 +1,11 @@
-const COMMENTS_COUNT = 5;
+const INITIAL_COMMENTS_COUNT = 5;
 
 const bigPicture = document.querySelector('.big-picture');
+const loadComments = document.querySelector('.comments-loader');
+const shownCommentsCountElement = document.querySelector('.shown-comments-count');
+
+// Количество показанных комментариев
+let shownCommentsCount = 0;
 
 const addCloseButtonClickHandler = () => {
   const closeButton = document.querySelector('#picture-cancel');
@@ -24,11 +29,11 @@ const addEscapeClickHanlder = () => {
   });
 };
 
-const addSocialComments = (comments) => {
-  const socialComments = document.querySelector('.social__comments');
-  socialComments.innerHTML = '';
 
-  comments.forEach((comment) => {
+const addSocialComments = (commentsToAdd) => {
+  const socialComments = document.querySelector('.social__comments');
+
+  commentsToAdd.forEach((comment) => {
     const { name, avatar, message } = comment;
     const socialComment = document.createElement('li');
     socialComment.classList.add('social__comment');
@@ -49,28 +54,51 @@ const addSocialComments = (comments) => {
   });
 };
 
+const updateLoadMoreComments = (allCommentsCount) => {
+  if(shownCommentsCount >= allCommentsCount) {
+    loadComments.style.display = 'none';
+  }
+};
+
+const updateComments = (allComments) => {
+  const allCommentsCount = allComments.length;
+  const nextIndex = shownCommentsCount + INITIAL_COMMENTS_COUNT;
+  const toAdd = nextIndex > allCommentsCount ? allCommentsCount - shownCommentsCount : INITIAL_COMMENTS_COUNT;
+
+  const commentsToAdd = allComments.slice(shownCommentsCount, shownCommentsCount + toAdd);
+  shownCommentsCount += toAdd;
+
+  addSocialComments(commentsToAdd);
+  updateLoadMoreComments(allCommentsCount);
+  shownCommentsCountElement.textContent = shownCommentsCount;
+};
+
+const addLoadMoreCommentsButtonClickHandler = (allComments) => {
+  loadComments.addEventListener('click', () => {
+    updateComments(allComments);
+  });
+};
+
 const fillBigPicture = (photo) => {
   const { url, likes, description, comments } = photo;
+
   const bigPictureImg = document.querySelector('.big-picture__img').querySelector('img');
   const likesCount = document.querySelector('.likes-count');
   const commentsCount = document.querySelector('.comments-count');
-  const shownCommentsCount = document.querySelector('.shown-comments-count');
   const socialCaption = document.querySelector('.social__caption');
 
   bigPicture.classList.remove('hidden');
   bigPictureImg.src = url;
   likesCount.textContent = likes;
   commentsCount.textContent = comments.length;
-  shownCommentsCount.textContent = COMMENTS_COUNT;
+  shownCommentsCountElement.textContent = shownCommentsCount;
   socialCaption.textContent = description;
 
-  addSocialComments(comments.slice(0, COMMENTS_COUNT));
+  addLoadMoreCommentsButtonClickHandler(comments);
+  updateComments(comments);
 
   // чтобы контейнер с фотографиями позади не прокручивался при скролле
   document.body.classList.add('modal-open');
-
-  // скрываем временно блоки
-  document.querySelector('.comments-loader').classList.add('hidden');
 };
 
 export const addFullImageFeatureToPictures = (photos) => {
