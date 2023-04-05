@@ -3,7 +3,7 @@ import { validateComment, getValidationCommentMessage } from './validate-comment
 import { sendPhoto } from './api.js';
 import { clearEffects } from './effects.js';
 import { clearScale } from './scale.js';
-import { showSuccessModal, showErrorModal } from './widgets/alert.js';
+import { showSuccessModal, showErrorModal } from './widgets/resultModal.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadFileInput = document.querySelector('#upload-file');

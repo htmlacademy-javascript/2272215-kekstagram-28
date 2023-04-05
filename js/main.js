@@ -1,4 +1,4 @@
-import { showErrorNotification } from './widgets/alert.js';
+import { showErrorNotification } from './widgets/notification.js';
 import { getPhotos } from './api.js';
 import { renderThumbnails } from './thumbnails.js';
 import { addFullImageFeatureToPictures } from './full-image.js';
