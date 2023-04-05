@@ -1,0 +1,34 @@
+const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
+
+const Methods = {
+  GET: 'GET',
+  POST: 'POST',
+};
+
+const Routes = {
+  'home': '/',
+  'photo': '/data'
+};
+
+const ErrorTexts = {
+  GET_PHOTO: 'Не удалось загрузить фотографии. Попробуйте обновить страницу',
+  SEND_PHOTO: 'Не удалось отправить данные фотографии. Попробуйте ещё раз',
+};
+
+const load = (route, errorText, method = Methods.GET, body = null) => (
+  fetch(`${BASE_URL}${route}`, { method, body })
+    .then((response) => {
+      if(response.ok) {
+        return response.json();
+      }
+
+      throw new Error();
+    })
+    .catch(() => {
+      throw new Error(errorText);
+    })
+);
+
+export const getPhotos = () => load(Routes.photo, ErrorTexts.GET_PHOTO, Methods.GET);
+
+export const sendPhoto = (body) => load(Routes.home, ErrorTexts.SEND_PHOTO, Methods.POST, body);

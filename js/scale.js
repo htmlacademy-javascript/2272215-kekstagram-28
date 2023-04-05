@@ -34,3 +34,8 @@ const onScaleSmallerClick = () => {
 
 scaleBigger.addEventListener('click', onScaleBiggerClick);
 scaleSmaller.addEventListener('click', onScaleSmallerClick);
+
+export const clearScale = () => {
+  scaleValueInput.value = '100%';
+  imagePreview.style.transform = 'none';
+};

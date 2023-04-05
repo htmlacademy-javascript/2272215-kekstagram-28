@@ -1,10 +1,15 @@
 import { validateHashtags, getValidationHashtagsMessage } from './validate-hashtags.js';
 import { validateComment, getValidationCommentMessage } from './validate-comment.js';
+import { sendPhoto } from './api.js';
+import { clearEffects } from './effects.js';
+import { clearScale } from './scale.js';
+import { showSuccessModal, showErrorModal } from './widgets/resultModal.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadFileInput = document.querySelector('#upload-file');
 const modal = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('#upload-cancel');
+const sendButton = document.querySelector('#upload-submit');
 const hashtags = document.querySelector('.text__hashtags');
 const comments = document.querySelector('.text__description');
 
@@ -27,6 +32,8 @@ const hideModal = () => {
   document.removeEventListener('keydown', onEscapeKeydown);
   form.reset();
   pristine.reset();
+  clearEffects();
+  clearScale();
 };
 
 const onUploadFileChange = () => {
@@ -50,15 +57,35 @@ function onEscapeKeydown(evt) {
   }
 }
 
+const blockSendButton = () => {
+  sendButton.disabled = true;
+};
+
+const unblockSendButton = () => {
+  sendButton.disabled = false;
+};
+
 pristine.addValidator(hashtags, validateHashtags, getValidationHashtagsMessage);
 pristine.addValidator(comments, validateComment, getValidationCommentMessage);
 
-const onFormSubmit = (evt) => {
+const onFormSubmit = async (evt) => {
   evt.preventDefault();
 
   const isValid = pristine.validate();
+
   if(isValid) {
-    form.submit();
+    blockSendButton();
+
+    try {
+      await sendPhoto(new FormData(evt.target));
+
+      hideModal();
+      showSuccessModal();
+    } catch(err) {
+      showErrorModal();
+    }
+
+    unblockSendButton();
   }
 };
 
