@@ -1,5 +1,5 @@
 import { showErrorNotification } from './widgets/alert.js';
-import { getPhotos } from './data.js';
+import { getPhotos } from './api.js';
 import { renderThumbnails } from './thumbnails.js';
 import { addFullImageFeatureToPictures } from './full-image.js';
 import './image-upload-form.js';

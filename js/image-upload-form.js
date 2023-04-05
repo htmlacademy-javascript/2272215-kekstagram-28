@@ -1,6 +1,6 @@
 import { validateHashtags, getValidationHashtagsMessage } from './validate-hashtags.js';
 import { validateComment, getValidationCommentMessage } from './validate-comment.js';
-import { sendPhoto } from './data.js';
+import { sendPhoto } from './api.js';
 import { clearEffects } from './effects.js';
 import { clearScale } from './scale.js';
 import { showSuccessModal, showErrorModal } from './widgets/alert.js';
