@@ -1,24 +1,22 @@
-export const getPhotos = () => (
-  fetch('https://28.javascript.pages.academy/kekstagram/data')
-    .then((response) => {
-      if(response.ok) {
-        return response.json();
-      }
+const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
 
-      throw new Error();
-    })
-    .then((photos) => photos)
-    .catch(() => {
-      throw new Error('Не удалось загрузить фотографии. Попробуйте обновить страницу');
-    })
-);
+const Methods = {
+  GET: 'GET',
+  POST: 'POST',
+};
 
-export const sendPhoto = (formData) => (
-  fetch('https://28.javascript.pages.academy/kekstagram/', {
-    method: 'POST',
-    body: formData,
+const Routes = {
+  'home': '/',
+  'photo': '/data'
+};
 
-  })
+const ErrorTexts = {
+  GET_PHOTO: 'Не удалось загрузить фотографии. Попробуйте обновить страницу',
+  SEND_PHOTO: 'Не удалось отправить данные фотографии. Попробуйте ещё раз',
+};
+
+const load = (route, errorText, method = Methods.GET, body = null) => (
+  fetch(`${BASE_URL}${route}`, { method, body })
     .then((response) => {
       if(response.ok) {
         return response.json();
@@ -27,6 +25,10 @@ export const sendPhoto = (formData) => (
       throw new Error();
     })
     .catch(() => {
-      throw new Error();
+      throw new Error(errorText);
     })
 );
+
+export const getPhotos = () => load(Routes.photo, ErrorTexts.GET_PHOTO, Methods.GET);
+
+export const sendPhoto = (body) => load(Routes.home, ErrorTexts.SEND_PHOTO, Methods.POST, body);
