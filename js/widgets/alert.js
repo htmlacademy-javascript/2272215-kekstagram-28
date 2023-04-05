@@ -33,20 +33,24 @@ const showErrorNotification = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const showSuccessModal = () => {
-  const successTemplate = document.querySelector('#success').content.querySelector('.success');
-  const successElement = successTemplate.cloneNode(true);
-  const successButton = successElement.querySelector('.success__button');
+const showResultModal = (success = true) => {
+  const templateSelector = success ? '#success' : '#error';
+  const modalSelector = success ? '.success' : '.error';
+  const buttonSelector = success ? '.success__button' : '.error__button';
 
-  document.body.append(successElement);
+  const template = document.querySelector(templateSelector).content.querySelector(modalSelector);
+  const modal = template.cloneNode(true);
+  const button = modal.querySelector(buttonSelector);
+
+  document.body.append(modal);
 
   const removeModal = () => {
-    successElement.remove();
+    modal.remove();
     document.removeEventListener('keydown', onDocumentKeydown);
     document.removeEventListener('click', onDocumentClick);
   };
 
-  const onSuccessButtonClick = () => {
+  const onButtonClick = () => {
     removeModal();
   };
 
@@ -63,9 +67,17 @@ const showSuccessModal = () => {
     }
   }
 
-  successButton.addEventListener('click', onSuccessButtonClick);
+  button.addEventListener('click', onButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
 };
 
-export { showErrorNotification, showSuccessModal };
+const showSuccessModal = () => {
+  showResultModal(true);
+};
+
+const showErrorModal = () => {
+  showResultModal(false);
+};
+
+export { showErrorNotification, showSuccessModal, showErrorModal };

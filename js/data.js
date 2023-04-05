@@ -27,6 +27,6 @@ export const sendPhoto = (formData) => (
       throw new Error();
     })
     .catch(() => {
-      // eslint-disable-next-line
+      throw new Error();
     })
 );
