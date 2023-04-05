@@ -32,6 +32,8 @@ const hideModal = () => {
   document.removeEventListener('keydown', onEscapeKeydown);
   form.reset();
   pristine.reset();
+  clearEffects();
+  clearScale();
 };
 
 const onUploadFileChange = () => {
@@ -78,9 +80,6 @@ const onFormSubmit = async (evt) => {
       await sendPhoto(new FormData(evt.target));
 
       hideModal();
-      clearEffects();
-      clearScale();
-
       showSuccessModal();
     } catch(err) {
       showErrorModal();
