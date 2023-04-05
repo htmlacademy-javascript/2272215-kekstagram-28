@@ -45,6 +45,12 @@ const clearImageEffect = () => {
   effectLevelInput.value = '';
 };
 
+const updateImageEffectClass = (newEffectClass) => {
+  imagePreview.classList.remove(activeEffectClass);
+  activeEffectClass = newEffectClass;
+  imagePreview.classList.add(activeEffectClass);
+};
+
 const updateImageEffect = () => {
   if(!activeSliderConfig) {
     return;
@@ -74,8 +80,7 @@ const onEffectRadioChange = (evt) => {
   const newEffect = evt.target.value;
 
   if(newEffect === Effects.ORIGINAL) {
-    hideSliderContainer();
-    clearImageEffect();
+    clearEffects();
     return;
   }
 
@@ -87,9 +92,7 @@ const onEffectRadioChange = (evt) => {
   updateSliderOptions(newEffect);
 
   // обновляем css-класс на картинке и значение активного класса
-  imagePreview.classList.remove(activeEffectClass);
-  activeEffectClass = getEffectClass(newEffect);
-  imagePreview.classList.add(activeEffectClass);
+  updateImageEffectClass(getEffectClass(newEffect));
 
   // обновляем эффект на картинке
   updateImageEffect();
@@ -101,4 +104,10 @@ slider.noUiSlider.on('update', () => {
 
 effectRadioInputs.forEach((input) => input.addEventListener('change', onEffectRadioChange));
 
+export function clearEffects () {
+  activeSliderConfig = null;
+  updateImageEffectClass(getEffectClass(Effects.ORIGINAL));
 
+  hideSliderContainer();
+  clearImageEffect();
+}
