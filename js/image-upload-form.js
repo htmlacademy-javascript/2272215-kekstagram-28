@@ -3,6 +3,7 @@ import { validateComment, getValidationCommentMessage } from './validate-comment
 import { sendPhoto } from './data.js';
 import { clearEffects } from './effects.js';
 import { clearScale } from './scale.js';
+import { showSuccessModal } from './widgets/alert.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadFileInput = document.querySelector('#upload-file');
@@ -79,6 +80,8 @@ const onFormSubmit = async (evt) => {
       hideModal();
       clearEffects();
       clearScale();
+
+      showSuccessModal();
     } catch(err) {
       // eslint-disable-next-line
     }

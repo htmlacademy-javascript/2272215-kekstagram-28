@@ -1,4 +1,4 @@
-import { showAlert } from './widgets/alert.js';
+import { showErrorNotification } from './widgets/alert.js';
 import { getPhotos } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
 import { addFullImageFeatureToPictures } from './full-image.js';
@@ -11,5 +11,5 @@ getPhotos().then((photos) => {
   addFullImageFeatureToPictures(photos);
 
 }).catch((err) => {
-  showAlert(err);
+  showErrorNotification(err);
 });
