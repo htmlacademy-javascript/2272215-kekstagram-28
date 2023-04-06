@@ -1,7 +1,8 @@
 import { renderThumbnails } from './thumbnails.js';
-import { generateRandomUniqueNumbers } from './utils.js';
+import { generateRandomUniqueNumbers, debounce } from './utils.js';
 
 const RANDOM_PHOTOS_COUNT = 10;
+const RERENDER_DELAY = 500;
 
 const ImageFilterIds = {
   DEFAULT: 'filter-default',
@@ -59,7 +60,7 @@ const onFilterButtonClick = (evt) => {
 
   if(activeFilterId !== newFilterId) {
     updateActiveFilter(newFilterId);
-    renderPhotos(newFilterId);
+    debounce(() => renderPhotos(newFilterId), RERENDER_DELAY)();
   }
 };
 
