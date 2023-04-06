@@ -16,7 +16,14 @@ const createThumbnailElement = (photo) => {
   return thumbnail;
 };
 
+const removeThumbnails = () => {
+  const thumbnails = document.querySelectorAll('.picture');
+  thumbnails.forEach((thumbnail) => thumbnail.remove());
+};
+
 export const renderThumbnails = (photos) => {
+  removeThumbnails();
+
   const pictures = document.querySelector('.pictures');
   const fragment = document.createDocumentFragment();
 
