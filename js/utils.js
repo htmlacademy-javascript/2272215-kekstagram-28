@@ -1,11 +1,11 @@
-const getRandomInteger = (a, b) => {
+export const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
 
-const generateId = () => {
+export const generateId = () => {
   let objectId = 0;
 
   const getObjectId = () => {
@@ -16,8 +16,29 @@ const generateId = () => {
   return getObjectId;
 };
 
+/**
+ * Функция генерирует {count} случайных уникальных чисел в диапазоне от 0..{maxValue}
+ * @param {Number} count
+ * @param {Number} maxValue
+ * @param {Array} Массив случайных уникальных чисел
+*/
+export const generateRandomUniqueNumbers = (count = 5, maxValue = 10) => {
+  const result = [];
+
+  while(result.length < count) {
+    const random = getRandomInteger(0, maxValue);
+    const foundIndex = result.findIndex((current) => current === random);
+
+    if(foundIndex === -1) {
+      result.push(random);
+    }
+  }
+
+  return result;
+};
+
 /** Функция возвращает слово в нужном склонении */
-const declOfNum = (value, words) => {
+export const declOfNum = (value, words) => {
   const num = Math.abs(value) % 100;
   const num1 = num % 10;
 
@@ -36,11 +57,18 @@ const declOfNum = (value, words) => {
   return words[2];
 };
 
-const hasDuplicates = (values) => {
+export const hasDuplicates = (values) => {
   const duplicates = values
     .map((value) => value.toLowerCase())
     .filter((value, index, array) => array.indexOf(value) !== index);
   return !!duplicates.length;
 };
 
-export { getRandomInteger, generateId, declOfNum, hasDuplicates };
+export const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
