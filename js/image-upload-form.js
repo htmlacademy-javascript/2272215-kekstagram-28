@@ -5,8 +5,12 @@ import { clearEffects } from './effects.js';
 import { clearScale } from './scale.js';
 import { showSuccessModal, showErrorModal } from './widgets/resultModal.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const form = document.querySelector('.img-upload__form');
 const uploadFileInput = document.querySelector('#upload-file');
+const uploadPreviewImage = document.querySelector('.img-upload__preview').querySelector('img');
+const effectPreview = document.querySelectorAll('.effects__preview');
 const modal = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('#upload-cancel');
 const sendButton = document.querySelector('#upload-submit');
@@ -36,7 +40,24 @@ const hideModal = () => {
   clearScale();
 };
 
-const onUploadFileChange = () => {
+const updateImage = (fileObject) => {
+  const fileName = fileObject.name.toLowerCase();
+  const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
+
+  if (matches) {
+    const imageUrl = URL.createObjectURL(fileObject);
+    uploadPreviewImage.src = imageUrl;
+
+    effectPreview.forEach((el) => {
+      el.style.backgroundImage = `url(${imageUrl})`;
+    });
+  }
+};
+
+const onUploadFileChange = (evt) => {
+  const file = evt.target.files[0];
+  updateImage(file);
+
   showModal();
 };
 
