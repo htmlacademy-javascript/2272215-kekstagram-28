@@ -10,7 +10,6 @@ import './effects.js';
 getPhotos().then((photos) => {
   renderThumbnails(photos);
   addFullImageFeatureToPictures(photos);
-
   addImageFiltersFeature(photos);
 
 }).catch((err) => {

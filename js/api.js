@@ -6,8 +6,8 @@ const Methods = {
 };
 
 const Routes = {
-  'home': '/',
-  'photo': '/data'
+  HOME: '/',
+  PHOTO: '/data'
 };
 
 const ErrorTexts = {
@@ -29,6 +29,6 @@ const load = (route, errorText, method = Methods.GET, body = null) => (
     })
 );
 
-export const getPhotos = () => load(Routes.photo, ErrorTexts.GET_PHOTO, Methods.GET);
+export const getPhotos = () => load(Routes.PHOTO, ErrorTexts.GET_PHOTO, Methods.GET);
 
-export const sendPhoto = (body) => load(Routes.home, ErrorTexts.SEND_PHOTO, Methods.POST, body);
+export const sendPhoto = (body) => load(Routes.HOME, ErrorTexts.SEND_PHOTO, Methods.POST, body);
