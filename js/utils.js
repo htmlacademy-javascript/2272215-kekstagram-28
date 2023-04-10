@@ -23,18 +23,18 @@ export const generateId = () => {
  * @param {Array} Массив случайных уникальных чисел
 */
 export const generateRandomUniqueNumbers = (count = 5, maxValue = 10) => {
-  const result = [];
+  const results = [];
 
-  while(result.length < count) {
+  while(results.length < count) {
     const random = getRandomInteger(0, maxValue);
-    const foundIndex = result.findIndex((current) => current === random);
+    const foundIndex = results.findIndex((current) => current === random);
 
     if(foundIndex === -1) {
-      result.push(random);
+      results.push(random);
     }
   }
 
-  return result;
+  return results;
 };
 
 /** Функция возвращает слово в нужном склонении */

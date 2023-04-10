@@ -98,9 +98,7 @@ const onEffectRadioChange = (evt) => {
   updateImageEffect();
 };
 
-slider.noUiSlider.on('update', () => {
-  updateImageEffect();
-});
+slider.noUiSlider.on('update', updateImageEffect);
 
 effectRadioInputs.forEach((input) => input.addEventListener('change', onEffectRadioChange));
 
