@@ -45,6 +45,8 @@ const renderPhotos = (filterId) => {
   renderThumbnails(filteredPhotos);
 };
 
+const debounceRenderPhotos = debounce(renderPhotos, RERENDER_DELAY);
+
 const updateActiveFilter = (newFilterId) => {
   const activeButton = imgFiltersElement.querySelector(`#${activeFilterId}`);
   const newActiveButton = imgFiltersElement.querySelector(`#${newFilterId}`);
@@ -60,7 +62,7 @@ const onFilterButtonClick = (evt) => {
 
   if(activeFilterId !== newFilterId) {
     updateActiveFilter(newFilterId);
-    debounce(() => renderPhotos(newFilterId), RERENDER_DELAY)();
+    debounceRenderPhotos(newFilterId);
   }
 };
 
